@@ -20,7 +20,7 @@ user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KE
                     """)
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY,
-                    title varchar, artist_id varchar, year int, 
+                    title varchar, artist_id varchar NOT NULL, year int, 
                     duration numeric)
                     """)
 
