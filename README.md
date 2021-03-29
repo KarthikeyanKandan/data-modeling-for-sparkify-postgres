@@ -23,18 +23,18 @@ Using the song and log datasets, I've created a star schema optimized for querie
 #### Fact Table
 
 1. `songplays` - records in log data associated with song plays i.e. records with page NextSong
- - songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
+     - songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
 
 #### Dimension Tables
 
 1. `users` - users in the app
- - user_id, first_name, last_name, gender, level
+    - user_id, first_name, last_name, gender, level
 2. `songs` - songs in the music database
- - song_id, title, artist_id, year, duration
+    - song_id, title, artist_id, year, duration
 3. `artists` - artists in the music database
- - rtist_id, name, location, latitude, longitude
+    - rtist_id, name, location, latitude, longitude
 4. `time` - timestamps of records in songplays broken down into the specific unit
- - `start_time`, hour, day, week, month, year, weekday
+    - `start_time`, hour, day, week, month, year, weekday
 
 ### Use
 Remember to run [`create_tables.py`](create_tables.py) before running [`etl.py`](etl.py) to reset your tables. 
