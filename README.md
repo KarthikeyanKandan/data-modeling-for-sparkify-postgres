@@ -36,26 +36,6 @@ Using the song and log datasets, I've created a star schema optimized for querie
 4. `time` - timestamps of records in songplays broken down into the specific unit
     - `start_time`, hour, day, week, month, year, weekday
 
-### Break down of steps followed
-
-1. Wrote DROP, CREATE and INSERT query statements in sql_queries.py
-
-2. Run in console
- ```
-python create_tables.py
-```
-
-3. Used test.ipynb Jupyter Notebook to interactively verify that all tables were created correctly.
-
-4. Followed the instructions and completed etl.ipynb Notebook to create the blueprint of the pipeline to process and insert all data into the tables.
-
-5. Once verified that base steps were correct by checking with test.ipynb, filled in etl.py program.
-
-6. Run etl in console, and verify results:
- ```
-python etl.py
-```
-
 ### Use
 Remember to run [`create_tables.py`](create_tables.py) before running [`etl.py`](etl.py) to reset your tables. 
 Run test.ipynb to confirm your records were successfully inserted into each table.
@@ -66,12 +46,12 @@ NOTE: You will not be able to run [`test.ipynb`](test.ipynb), [`etl.ipynb`](etl.
 
 Prerequisites: 
 - Database and tables created
+### Steps in etl.py
+1. Connect to the sparkify database, and begin by processing all songs related data.
 
-1. On the etl.py we start our program by connecting to the sparkify database, and begin by processing all songs related data.
+2. Walk through the tree files under 'data/song_data', and for each json file encountered we send the file to a function 'process_song_file'.
 
-2. We walk through the tree files under /data/song_data, and for each json file encountered we send the file to a function called process_song_file.
-
-3. Here we load the file as a dataframe using a pandas function called read_json().
+3. Load the file as a dataframe using a pandas function called read_json().
 
 4. For each row in the dataframe we select the fields we are interested in:
     
@@ -81,21 +61,21 @@ Prerequisites:
     ```
      artist_data = [artist_id, artist_name, artist_location, artist_longitude, artist_latitude]
     ```
-5. Finally, we insert this data into their respective databases.
+5. Insert this data into their respective databases.
 
-6. Once all files from song_data are read and processed, we move on processing log_data.
+6. Once all files from song_data are read and processed, we move to process log_data.
 
-7. We repeat step 2, but this time we send our files under /data/log_data to function process_log_file.
+7. Walk through the tree files under 'data/log_data', and for each json file encountered we send the file to a function 'process_log_file'.
 
-8. We load our data as a dataframe same way as done in songs data. 
+8. Load the file as a dataframe using a pandas function called read_json().
 
-9. We filter rows where page = 'NextSong'
+9. Filter rows where page = 'NextSong'
 
-10. We convert ts column where we have our start_time as timestamp in millisencs to datetime format. We obtain the parameters we need from this date (day, hour, week, etc), and insert everything into our time dimentional table.
+10. Convert ts column where we have our start_time as timestamp in milliseconds to datetime format and obtain the parameters such as 'hour', 'day', 'weekofyear', 'month', 'year', 'weekday' from this date and insert everything into our time dimension table.
 
-11. Next we load user data into our user table
+11. Load user data into our user table
 
-12. Finally we lookup song and artist id from their tables by song name, artist name and song duration that we have on our song play data. The query used is the following:
+12. Get song and artist id from their tables by song name, artist name and song duration that we have on our song play data. The query used is the following:
     ```
     song_select = ("""SELECT s.song_id, a.artist_id 
                 FROM songs s 
